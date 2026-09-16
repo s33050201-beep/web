@@ -49,15 +49,20 @@
         document.write("<table align='center'>");
 
           for (let i = 0; i <= 9; i++) {
-            document.write("<tr>");
-            for (let j = 0; j <= i ; j++) {
-              document.write("<td>");
-              document.write(i + " * " + j + " = " + (i * j) + "&nbsp;&nbsp;&nbsp;");
-              document.write("</td>");
+            let tableHtml = "<table align='center' border='1'>";
+
+            for (let i = 0; i <= 9; i++) {
+              tableHtml += "<tr>";
+              for (let j = 0; j <= i ; j++) {
+                tableHtml += "<td>";
+                tableHtml += i + " * " + j + " = " + (i * j) + "&nbsp;&nbsp;&nbsp;";
+                tableHtml += "</td>";
+              }
+              tableHtml += "</tr>";
             }
-          document.write("</tr>");
-          }
-        document.write("</table>");
+            tableHtml += "</table>";
+            
+            document.getElementById("table-container").innerHTML = tableHtml;
       }
     </script>
   </head>
@@ -107,10 +112,10 @@
       </table>
     </div>
     
-    <div style="text-align: center; padding: 10px; ">
-      <button onclick="Multiplication_table()">九九乘法表</button>
-    </div>
-
+        <div style="text-align: center; padding: 10px; ">
+          <button onclick="Multiplication_table()">九九乘法表</button>
+        </div>
+      <div id="table-container" style="margin-top: 20px;"></div>
     </div>
   </body>
 </html>
