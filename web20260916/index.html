@@ -36,7 +36,7 @@
       }
 
       .part{
-        max-width: 650px;
+        max-width: 900px;
         margin: auto;
         background-color: #617a67;
         padding: 10px;
@@ -53,7 +53,7 @@
           const table_r = document.createElement("tr");
           for (let j = 1; j <= i ; j++) {
             const table_d = document.createElement("td");
-            table_d.innerText += `${i} * ${j} = ${i * j}   `;
+            table_d.innerText += `\u00A0${i} * ${j} = ${i * j}\u00A0`;
             table_r.appendChild(table_d);
             Mult_table.appendChild(table_r);
           }
@@ -109,7 +109,7 @@
       </div>
     
       <div style="text-align: center; padding: 10px; margin-top: 10px">
-        <button onclick="Multiplication_table()">呈現九九乘法表</button>
+        <button onclick="Multiplication_table()">生成九九乘法表</button>
       </div>
 
     </div>
