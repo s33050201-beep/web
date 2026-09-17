@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>web20260916</title>
+    <title>九九乘法表 33050201資訊三乙李加薏</title>
     
     <style>
       body{
@@ -26,7 +26,6 @@
         color: #2A3029;
         border: 1px dotted #eae2b7;
         border-radius: 10px;
-        
       }
 
       .content{
@@ -37,32 +36,29 @@
       }
 
       .part{
-        max-width: 550px;
+        max-width: 650px;
         margin: auto;
         background-color: #617a67;
         padding: 10px;
+        color: #eae2b7;
       }
     </style>
 
     <script>
       function Multiplication_table() {
-        document.write("<table align='center'>");
+        const Mult_table = document.createElement("table");
+        Mult_table.className = "part";
 
-          for (let i = 0; i <= 9; i++) {
-            let tableHtml = "<table align='center' border='1'>";
-
-            for (let i = 0; i <= 9; i++) {
-              tableHtml += "<tr>";
-              for (let j = 0; j <= i ; j++) {
-                tableHtml += "<td>";
-                tableHtml += i + " * " + j + " = " + (i * j) + "&nbsp;&nbsp;&nbsp;";
-                tableHtml += "</td>";
-              }
-              tableHtml += "</tr>";
-            }
-            tableHtml += "</table>";
-            
-            document.getElementById("table-container").innerHTML = tableHtml;
+        for (let i = 1; i <= 9; i++) {
+          const table_r = document.createElement("tr");
+          for (let j = 1; j <= i ; j++) {
+            const table_d = document.createElement("td");
+            table_d.innerText += `${i} * ${j} = ${i * j}   `;
+            table_r.appendChild(table_d);
+            Mult_table.appendChild(table_r);
+          }
+        }
+        document.body.appendChild(Mult_table);
       }
     </script>
   </head>
@@ -70,52 +66,52 @@
     <div class="content">
       <h1 style="text-align: center;">資訊三乙李加薏 網頁設計實習</h1>
 
-    <div>
-      <p>List practice:</p>
-      <ul>
-        <li>List object</li>
-        <li>List object 2</li>
-        <li>List object 3</li>
-      </ul>
-    </div>
+      <div>
+        <p>List practice:</p>
+        <ul>
+          <li>List object</li>
+          <li>List object 2</li>
+          <li>List object 3</li>
+        </ul>
+      </div>
 
-    <div>
-      <p>Number list practice:</p>
-      <ol>
-        <li>List number 1</li>
-        <li>List number 2</li>
-        <li>List number 3</li>
-      </ol>
-    </div>
+      <div>
+        <p>Number list practice:</p>
+        <ol>
+          <li>List number 1</li>
+          <li>List number 2</li>
+          <li>List number 3</li>
+        </ol>
+      </div>
 
-    <div>
-      <p>Table list practice:</p>
-      <table>
-        <tr>
-          <th>Title head 1</th>
-          <th>Title head 2</th>
-          <th>Title head 3</th>
-          <th>Title head 4</th>
-        </tr>
-        <tr>
-          <td>row 1-1</td>
-          <td>row 1-2</td>
-          <td>row 1-3</td>
-          <td>row 1-4</td>
-        </tr>
-        <tr>
-          <td>row 2-1</td>
-          <td>row 2-2</td>
-          <td>row 2-3</td>
-          <td>row 2-4</td>
-        </tr>
-      </table>
-    </div>
+      <div>
+        <p>Table list practice:</p>
+        <table>
+          <tr>
+            <th>Title head 1</th>
+            <th>Title head 2</th>
+            <th>Title head 3</th>
+            <th>Title head 4</th>
+          </tr>
+          <tr>
+            <td>row 1-1</td>
+            <td>row 1-2</td>
+            <td>row 1-3</td>
+            <td>row 1-4</td>
+          </tr>
+          <tr>
+            <td>row 2-1</td>
+            <td>row 2-2</td>
+            <td>row 2-3</td>
+            <td>row 2-4</td>
+          </tr>
+        </table>
+      </div>
     
-        <div style="text-align: center; padding: 10px; ">
-          <button onclick="Multiplication_table()">九九乘法表</button>
-        </div>
-      <div id="table-container" style="margin-top: 20px;"></div>
+      <div style="text-align: center; padding: 10px; margin-top: 10px">
+        <button onclick="Multiplication_table()">呈現九九乘法表</button>
+      </div>
+
     </div>
   </body>
 </html>
