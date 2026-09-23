@@ -1,0 +1,24 @@
+:root {
+  --color-primary: #213448;
+  --color-secondary: #547792;
+  --color-line: #94B4C1;
+  --color-text: #EAE0CF;
+}
+
+body {
+    background-color: var(--color-primary);
+    width: auto;
+}
+
+h1, p, img {
+    color: var(--color-text);
+}
+
+h1 {
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+p {
+    font-size: 1rem;
+}
