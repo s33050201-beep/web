@@ -6,11 +6,22 @@
 
     <style>
       :root{
-        --black: #1c1c1c;
-        --dark-blue: #092641;
-        --light-yellow: #fee402;
-        --yellow: #fdca00;
-        --white: #fffed5;
+        --black: #222831;
+        --dark-blue: #30475E;
+        --yellow: #FFD369;
+        --blue: #76ABAE;
+        --green: #0E8388;
+        --white: #EEEEEE;
+      }
+
+      .split-container{
+        display: grid;
+        grid-template-columns: 50% 50%;
+      }
+
+      .left-side, .right-side {
+        flex: 1; /* 兩邊均分畫面 (50/50) */
+        padding: 20px;
       }
 
       body{
@@ -18,102 +29,154 @@
         color: var(--white);
       }
 
-      hr {
-        display: block;
-        height: 1px;
-        border: 0;
-        border-top: 1px solid var(--light-yellow);
-        margin: 1em 0;
+      h3{
+        font-size: 1.5rem;
+        text-align: center;
         padding: 0;
+      }
+
+      p{
+        font-size: 1rem;
+        text-align: center;
+      }
+
+      button {
+        background-color: var(--green);
+        border: none;
+        color: var(--white);
+        padding: 8px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+      }
+
+      .box {
+        display: flex;
+        flex-direction: column; 
+        background-color: var(--blue);
+        height: 30%;
+        border-radius: 20px;
+        margin: 10px;
+        padding: 5px 10px;
+        overflow: hidden; 
+        box-sizing: border-box; 
+      }
+
+      .box-top, .box-bottom {
+        flex: 1;          /* 兩邊均分畫面 (50/50) */
+        padding: 0;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center; 
       }
     </style>
   </head>
-  <body>
-  <div style="margin: auto; padding: auto;">
-    <h1>🎰 資三乙李加薏_大樂透自動選號與對獎系統</h1>
-    <p><b>教學重點：</b>利用 id 屬性與 document.getElementById() 修改網頁內容</p>
 
+  <header>
+    <h1 style="text-align: center;">🎰 資三乙李加薏_大樂透自動選號與對獎系統</h1>
+  </header>
+  <body>
     <!-- 宣告全域變數，用來記錄玩家選號與開獎號碼 -->
     <script>
       let userNumbers = [];
       let winningNumbers = [];
     </script>
 
-    <hr> <!-- 水平分隔線 --> <!--[cite: 1] -->
+    <div class="split-container">
+      <!-- LEFT SIDE -->
+      <div class="left-side">
+        <div class="box">
+          <!-- 第一區塊：玩家選號區 -->
+          <div class="box-top">
+            <h3>彩券號碼</h3>
+            <!-- 設定 id="my-numbers" 供 JS 更新文字 -->
+            <p id="my-numbers">請點擊下方按鈕進行選號</p>
+          </div>
+          <!-- 按鈕點擊時，直接執行內嵌的 JavaScript 程式碼（不使用 custom function） -->
+          <div class="box-bottom">
+            <button onclick="
+              userNumbers = [];
+              while (userNumbers.length < 6) {
+                let randNum = Math.floor(Math.random() * 49) + 1;
+                if (!userNumbers.includes(randNum)) {
+                  userNumbers.push(randNum);
+                }
+              }
+              userNumbers.sort((a, b) => a - b);
+              document.getElementById('my-numbers').innerText = '我的號碼：' + userNumbers.join(', ');
+            ">🎲 自動選號</button>
+          </div>
+        </div>
 
-    <!-- 第一區塊：玩家選號區 -->
-      <h3>1. 我的彩券號碼</h3>
-      <!-- 設定 id="my-numbers" 供 JS 更新文字 -->
-      <p id="my-numbers">請點擊下方按鈕進行選號</p>
-    
-      <!-- 按鈕點擊時，直接執行內嵌的 JavaScript 程式碼（不使用 custom function） -->
-      <button onclick="
-        userNumbers = [];
-        while (userNumbers.length < 6) {
-            let randNum = Math.floor(Math.random() * 49) + 1;
-            if (!userNumbers.includes(randNum)) {
-                userNumbers.push(randNum);
-            }
-        }
-        userNumbers.sort((a, b) => a - b);
-        document.getElementById('my-numbers').innerText = '我的號碼：' + userNumbers.join(', ');
-      ">🎲 自動選號</button>
+        <div class="box">
+          <!-- 第二區塊：電腦開獎區 -->
+          <div class="box-top">
+            <h3>開獎號碼</h3>
+            <!-- 設定 id="draw-numbers" 供 JS 更新文字 -->
+            <p id="draw-numbers">等待開獎中...</p>
+          </div>
+          <div class="box-bottom">
+            <button onclick="
+              winningNumbers = [];
+              while (winningNumbers.length < 6) {
+                let randNum = Math.floor(Math.random() * 49) + 1;
+                if (!winningNumbers.includes(randNum)) {
+                  winningNumbers.push(randNum);
+                }
+              }
+              winningNumbers.sort((a, b) => a - b);
+              document.getElementById('draw-numbers').innerText = '開獎號碼：' + winningNumbers.join(', ');
+            ">🎉 開始開獎</button>
+          </div>
+        </div>
 
-    <hr> <!--[cite: 1] -->
-
-      <!-- 第二區塊：電腦開獎區 -->
-      <h3>2. 本期開獎號碼</h3>
-      <!-- 設定 id="draw-numbers" 供 JS 更新文字 -->
-      <p id="draw-numbers">等待開獎中...</p>
-    
-      <button onclick="
-        winningNumbers = [];
-        while (winningNumbers.length < 6) {
-            let randNum = Math.floor(Math.random() * 49) + 1;
-            if (!winningNumbers.includes(randNum)) {
-                winningNumbers.push(randNum);
-            }
-        }
-        winningNumbers.sort((a, b) => a - b);
-        document.getElementById('draw-numbers').innerText = '開獎號碼：' + winningNumbers.join(', ');
-      ">🎉 開始開獎</button>
-
-    <hr> <!--[cite: 1] -->
-
-      <!-- 第三區塊：對獎結果區 -->
-      <h3>3. 對獎結果</h3>
-      <p id="result-text" style="font-weight: bold;"></p>
-      <button onclick="
-        if (userNumbers.length === 0 || winningNumbers.length === 0) {
-            alert('請先點擊「自動選號」與「開始開獎」！');
-        } else {
-            let matchCount = 0;
-            let matchedList = [];
-            
-            // 利用迴圈比對對中幾個號碼
-            for (let i = 0; i < userNumbers.length; i++) {
-                if (winningNumbers.includes(userNumbers[i])) {
+        <div class="box">
+          <!-- 第三區塊：對獎結果區 -->
+          <div class="box-top">
+            <h3>對獎結果</h3>
+            <!-- 顯示對獎結果的標籤 (id="result-text") -->
+            <p id="result-text" style="font-weight: bold;">結果呈現位置</p>
+          </div>
+          <div class="box-bottom">
+            <button onclick="
+              if (userNumbers.length === 0 || winningNumbers.length === 0) {
+                alert('請先點擊「自動選號」與「開始開獎」！');
+              } else {
+                let matchCount = 0;
+                let matchedList = [];
+                // 利用迴圈比對對中幾個號碼
+                for (let i = 0; i < userNumbers.length; i++) {
+                  if (winningNumbers.includes(userNumbers[i])) {
                     matchCount++;
                     matchedList.push(userNumbers[i]);
+                  }
                 }
-            }
 
-            let resultText = '對中 ' + matchCount + ' 個號碼！';
-            if (matchCount > 0) {
-                resultText += '（對中號碼：' + matchedList.join(', ') + '）';
-            }
-
-            // 更新到指定 id 的元素中
-            document.getElementById('result-text').innerText = resultText;
-        }
-      ">🔍 進行對獎</button>
-
-      <!-- 顯示對獎結果的標籤 (id="result-text") -->
+                let resultText = '對中 ' + matchCount + ' 個號碼！';
+                if (matchCount > 0) {
+                  resultText += '（對中號碼：' + matchedList.join(', ') + '）';
+                }
+                // 更新到指定 id 的元素中
+                document.getElementById('result-text').innerText = resultText;
+              }
+            ">🔍 進行對獎</button>
+          </div>
+        </div>
+        
+      </div>
+      <!-- RIGHT SIDE -->
+      <div class="right-side">
       
-
-    <hr>
-
-    <button onclick="window.location.reload(); ">🎲 重新開始</button>
-  </div>
+      </div>
+    </div>
   </body>
+  <footer>
+    <button onclick="window.location.reload();"
+      style="display: block;
+            margin: auto;">🎲 重新開始</button>
+  </footer>
 </html>
