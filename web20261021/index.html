@@ -6,17 +6,17 @@
 
     <style>
       :root{
-        --black: #222831;
-        --dark-blue: #30475E;
-        --yellow: #FFD369;
-        --blue: #76ABAE;
-        --green: #0E8388;
-        --white: #EEEEEE;
+        --main: #4C4541;
+        --primary: #AEAC78;
+        --yellow: #F2C46A;
+        --button: #A4BE7B;
+        --white: #FCF0DA;
       }
 
       .split-container{
         display: grid;
         grid-template-columns: 50% 50%;
+        flex: 1;
       }
 
       .left-side, .right-side {
@@ -25,8 +25,14 @@
       }
 
       body{
-        background-color: var(--dark-blue);
+        background-color: var(--main);
         color: var(--white);
+        display: flex;
+        flex-direction: column;
+      }
+
+      footer{
+        background-color: var(--white);
       }
 
       h3{
@@ -41,7 +47,7 @@
       }
 
       button {
-        background-color: var(--green);
+        background-color: var(--button);
         border: none;
         color: var(--white);
         padding: 8px 24px;
@@ -49,6 +55,7 @@
         text-decoration: none;
         display: inline-block;
         font-size: 16px;
+        border-radius: 2rem;
         margin: 4px 2px;
         cursor: pointer;
       }
@@ -56,9 +63,9 @@
       .box {
         display: flex;
         flex-direction: column; 
-        background-color: var(--blue);
-        height: 30%;
-        border-radius: 20px;
+        background-color: var(--primary);
+        min-height: 35%;
+        border-radius: 1rem;
         margin: 10px;
         padding: 5px 10px;
         overflow: hidden; 
@@ -76,10 +83,12 @@
     </style>
   </head>
 
-  <header>
-    <h1 style="text-align: center;">🎰 資三乙李加薏_大樂透自動選號與對獎系統</h1>
-  </header>
-  <body>
+  
+  <body style="display: flex; flex-direction: column;">
+    <header>
+        <h1 style="text-align: center;">🎰 資三乙李加薏_大樂透自動選號與對獎系統</h1>
+    </header>
+
     <!-- 宣告全域變數，用來記錄玩家選號與開獎號碼 -->
     <script>
       let userNumbers = [];
@@ -173,10 +182,10 @@
       
       </div>
     </div>
+    <footer>
+        <button onclick="window.location.reload();"
+                style="display: block;
+                        margin: auto;">🎲 重新開始</button>
+    </footer>
   </body>
-  <footer>
-    <button onclick="window.location.reload();"
-      style="display: block;
-            margin: auto;">🎲 重新開始</button>
-  </footer>
 </html>
