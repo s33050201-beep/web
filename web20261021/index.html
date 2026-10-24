@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title>大樂透自動選號與對獎系統（Lotto）</title>
 
+    <!-- 字體匯入 Noto Serif TC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://googleapis.com" rel="stylesheet">
+
     <style>
       :root{
         --main: #4C4541;
@@ -15,12 +20,10 @@
 
       .split-container{
         display: grid;
-        grid-template-columns: 50% 50%;
-        flex: 1;
+        grid-template-columns: 30% 70%;
       }
 
       .left-side, .right-side {
-        flex: 1; /* 兩邊均分畫面 (50/50) */
         padding: 20px;
       }
 
@@ -40,11 +43,13 @@
         font-size: 1.5rem;
         text-align: center;
         padding: 0;
+        font-family: 'Noto Serif TC', sans-serif;
       }
 
       p{
-        font-size: 1.15rem;
+        font-size: 1.3rem;
         text-align: center;
+        font-family: 'Noto Serif TC', sans-serif;
       }
 
       button {
@@ -98,8 +103,8 @@
       .ball {
         visibility: hidden;
 
-        width: 2.7rem;
-        height: 2.7rem;
+        width: 3.5rem;
+        height: 3.5rem;
         border-radius: 50%;
         aspect-ratio: 1 / 1;
         
