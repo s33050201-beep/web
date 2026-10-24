@@ -7,7 +7,7 @@
     <!-- 字體匯入 Noto Serif TC -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://googleapis.com" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&display=swap" rel="stylesheet">
 
     <style>
       :root{
@@ -33,6 +33,7 @@
         color: var(--white);
         display: flex;
         flex-direction: column;
+        padding-bottom: 10%;
       }
 
       footer{
@@ -40,16 +41,18 @@
       }
 
       h3{
+        padding: 0;
         font-size: 1.5rem;
         text-align: center;
-        padding: 0;
         font-family: 'Noto Serif TC', sans-serif;
+        font-weight: bold;
       }
 
       p{
         font-size: 1.3rem;
         text-align: center;
         font-family: 'Noto Serif TC', sans-serif;
+        font-weight: bold;
       }
 
       button {
@@ -146,7 +149,7 @@
   <body>
     <div class="whole-container">
     <header>
-        <h1 style="text-align: center;">🎰 資三乙李加薏_大樂透自動選號與對獎系統</h1>
+        <h1 style="text-align: center; font-family: 'Noto Serif TC', sans-serif;;">🎰 資三乙李加薏_大樂透自動選號與對獎系統</h1>
     </header>
 
     <!-- 宣告全域變數，用來記錄玩家選號與開獎號碼 -->
@@ -305,7 +308,7 @@
         <div class="box">
           <div class="box-top">
             <!-- 顯示對獎結果 -->
-            <p id="result-text" style="font-weight: bold;">對獎結果</p>
+            <p id="result-text"">對獎結果</p>
           </div>
 
           <!-- 顯示中獎號碼-->
@@ -322,9 +325,6 @@
         </div>
       </div>
     </div>
-    </div>
-    <div style="height: 100%;
-                position: fixed;">
     </div>
     <footer style="width: 100%;
                     position: fixed;
