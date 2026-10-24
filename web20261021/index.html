@@ -25,6 +25,7 @@
       }
 
       body{
+        min-width: 45%;
         background-color: var(--main);
         color: var(--white);
         display: flex;
@@ -42,7 +43,7 @@
       }
 
       p{
-        font-size: 1rem;
+        font-size: 1.15rem;
         text-align: center;
       }
 
@@ -80,11 +81,65 @@
         align-items: center;
         justify-content: center; 
       }
+
+      .number-container{
+        visibility: hidden;
+
+        display: flex;
+        flex: 1;
+        gap: auto;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0;
+        background-color: var(--white);
+        border-radius: 0;
+      }
+
+      .ball {
+        visibility: hidden;
+
+        width: 2.7rem;
+        height: 2.7rem;
+        border-radius: 50%;
+        aspect-ratio: 1 / 1;
+        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+  
+        color: var(--white);
+        background-color: var(--button);
+        font-family: 'Arial', sans-serif;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      whole-container{
+        margin: 0 auto;
+        min-width: 50%;
+        width: 800px;
+      }
     </style>
+    <script>
+      function reflash(){
+        for(let i = 1 ; i < 7 ; i++){
+          //color
+          document.getElementsByClassName('ball')[i-1].style.backgroundColor = 'var(--button)';
+          document.getElementsByClassName('ball')[5+i].style.backgroundColor = 'var(--button)';
+          document.getElementsByClassName('ball')[11+i].style.backgroundColor = 'var(--button)';
+          
+          //visibility
+          document.getElementsByClassName('number-container')[2].style.visibility = 'hidden';
+          document.getElementById('winning-ball' + i).style.visibility = 'hidden';
+          }
+        document.getElementById('result-text').innerText = '對獎結果';
+        }
+    </script>
   </head>
 
   
-  <body style="display: flex; flex-direction: column;">
+  <body>
+    <div class="whole-container">
     <header>
         <h1 style="text-align: center;">🎰 資三乙李加薏_大樂透自動選號與對獎系統</h1>
     </header>
@@ -98,17 +153,18 @@
     <div class="split-container">
       <!-- LEFT SIDE -->
       <div class="left-side">
+
+        <!-- 第一區塊：玩家選號區 -->
         <div class="box">
-          <!-- 第一區塊：玩家選號區 -->
           <div class="box-top">
             <h3>彩券號碼</h3>
-            <!-- 設定 id="my-numbers" 供 JS 更新文字 -->
-            <p id="my-numbers">請點擊下方按鈕進行選號</p>
           </div>
+
           <!-- 按鈕點擊時，直接執行內嵌的 JavaScript 程式碼（不使用 custom function） -->
           <div class="box-bottom">
             <button onclick="
               userNumbers = [];
+              //random
               while (userNumbers.length < 6) {
                 let randNum = Math.floor(Math.random() * 49) + 1;
                 if (!userNumbers.includes(randNum)) {
@@ -116,21 +172,30 @@
                 }
               }
               userNumbers.sort((a, b) => a - b);
-              document.getElementById('my-numbers').innerText = '我的號碼：' + userNumbers.join(', ');
+              //balling
+              //style ball
+              reflash();
+              for(let i = 1 ; i < 7 ; i++){
+                document.getElementById('my-ball' + i).innerText = userNumbers[i-1];
+                //visibility
+                document.getElementById('my-ball' + i).style.visibility = 'visible';
+              }
+              document.getElementById('my-numbers').innerText = '我的號碼';
+              document.getElementsByClassName('number-container')[0].style.visibility = 'visible';
             ">🎲 自動選號</button>
           </div>
         </div>
 
+        <!-- 第二區塊：電腦開獎區 -->
         <div class="box">
-          <!-- 第二區塊：電腦開獎區 -->
           <div class="box-top">
             <h3>開獎號碼</h3>
-            <!-- 設定 id="draw-numbers" 供 JS 更新文字 -->
-            <p id="draw-numbers">等待開獎中...</p>
           </div>
+
           <div class="box-bottom">
             <button onclick="
               winningNumbers = [];
+              //random
               while (winningNumbers.length < 6) {
                 let randNum = Math.floor(Math.random() * 49) + 1;
                 if (!winningNumbers.includes(randNum)) {
@@ -138,37 +203,51 @@
                 }
               }
               winningNumbers.sort((a, b) => a - b);
-              document.getElementById('draw-numbers').innerText = '開獎號碼：' + winningNumbers.join(', ');
+              //balling
+              //style
+              reflash();
+              for(let i = 1 ; i < 7 ; i++){
+                document.getElementById('draw-ball' + i).innerText = winningNumbers[i-1];
+                //visibility
+                document.getElementById('draw-ball' + i).style.visibility = 'visible';
+              }
+              document.getElementById('draw-numbers').innerText = '開獎號碼';
+              document.getElementsByClassName('number-container')[1].style.visibility = 'visible';
             ">🎉 開始開獎</button>
           </div>
         </div>
 
+        <!-- 第三區塊：對獎結果區 -->
         <div class="box">
-          <!-- 第三區塊：對獎結果區 -->
           <div class="box-top">
             <h3>對獎結果</h3>
-            <!-- 顯示對獎結果的標籤 (id="result-text") -->
-            <p id="result-text" style="font-weight: bold;">結果呈現位置</p>
           </div>
+
           <div class="box-bottom">
             <button onclick="
               if (userNumbers.length === 0 || winningNumbers.length === 0) {
                 alert('請先點擊「自動選號」與「開始開獎」！');
-              } else {
+              }else {
                 let matchCount = 0;
-                let matchedList = [];
-                // 利用迴圈比對對中幾個號碼
-                for (let i = 0; i < userNumbers.length; i++) {
-                  if (winningNumbers.includes(userNumbers[i])) {
+                reflash();
+                for(let i = 0 ; i < userNumbers.length ; i++){
+                  //indexOf: B[i] -> A[?] == B[i]
+                  const indexInWin = winningNumbers.indexOf(userNumbers[i]);
+                  if(indexInWin !== -1){
                     matchCount++;
-                    matchedList.push(userNumbers[i]);
+                    //balling
+                    //my-ball
+                    document.getElementById('my-ball' + (i+1)).style.backgroundColor = 'var(--yellow)';
+                    //draw-ball
+                    document.getElementById('draw-ball' + (indexInWin+1)).style.backgroundColor = 'var(--yellow)';
+                    //result-ball
+                    document.getElementsByClassName('number-container')[2].style.visibility = 'visible';
+                    document.getElementById('winning-ball' + (matchCount)).style.backgroundColor = 'var(--yellow)';
+                    document.getElementById('winning-ball' + (matchCount)).innerText = userNumbers[i];
+                    document.getElementById('winning-ball' + (matchCount)).style.visibility = 'visible';
                   }
                 }
-
                 let resultText = '對中 ' + matchCount + ' 個號碼！';
-                if (matchCount > 0) {
-                  resultText += '（對中號碼：' + matchedList.join(', ') + '）';
-                }
                 // 更新到指定 id 的元素中
                 document.getElementById('result-text').innerText = resultText;
               }
@@ -179,13 +258,81 @@
       </div>
       <!-- RIGHT SIDE -->
       <div class="right-side">
-      
+        <!-- 第一區 -->
+        <div class="box">
+          <div class="box-top">
+            <p id="my-numbers">請點擊左方按鈕進行自動選號</p>
+          </div>
+
+          <!-- 彩券號碼 -->
+          <div class="box-bottom">
+            <div class="number-container">
+              <div class="ball" id="my-ball1"></div>
+              <div class="ball" id="my-ball2"></div>
+              <div class="ball" id="my-ball3"></div>
+              <div class="ball" id="my-ball4"></div>
+              <div class="ball" id="my-ball5"></div>
+              <div class="ball" id="my-ball6"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第二區 -->
+        <div class="box">
+          <div class="box-top">
+            <p id="draw-numbers">等待開獎中...</p>
+          </div>
+
+          <!-- 開獎號碼 -->
+          <div class="box-bottom">
+            <div class="number-container">
+              <div class="ball" id="draw-ball1"></div>
+              <div class="ball" id="draw-ball2"></div>
+              <div class="ball" id="draw-ball3"></div>
+              <div class="ball" id="draw-ball4"></div>
+              <div class="ball" id="draw-ball5"></div>
+              <div class="ball" id="draw-ball6"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第三區 -->
+        <div class="box">
+          <div class="box-top">
+            <!-- 顯示對獎結果 -->
+            <p id="result-text" style="font-weight: bold;">對獎結果</p>
+          </div>
+
+          <!-- 顯示中獎號碼-->
+          <div class="box-bottom">
+            <div class="number-container">
+              <div class="ball" id="winning-ball1"></div>
+              <div class="ball" id="winning-ball2"></div>
+              <div class="ball" id="winning-ball3"></div>
+              <div class="ball" id="winning-ball4"></div>
+              <div class="ball" id="winning-ball5"></div>
+              <div class="ball" id="winning-ball6"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <footer>
+    </div>
+    <div style="height: 100%;
+                position: fixed;">
+    </div>
+    <footer style="width: 100%;
+                    position: fixed;
+                    bottom: 0;
+                    height: 10%;">
         <button onclick="window.location.reload();"
                 style="display: block;
-                        margin: auto;">🎲 重新開始</button>
+                        margin: auto;
+                        align-items: center;
+                        height: 100%;
+                        width: 100%;
+                        border-radius: 0%;
+                        padding: 0%;">🎲 重新開始</button>
     </footer>
   </body>
 </html>
