@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-
+    <meta charset="UTF-8">
     <style>
         :root{
           --main: #27374D;
           --primay: #526D82;
           --light: #9DB2BF;
-          --white: #DDE6ED;
+          --white: #fffcea;
           --button: #FFD369;
           --button-hover: #e2b751;
         }
@@ -15,11 +15,13 @@
         body{
           background-color: var(--main);
           color: var(--white);
+          text-align: center;
         }
 
         .container{
           background-color: var(--primay);
           padding: 1.5rem;
+          border-radius: 5px;
           max-width: 60%;
           margin: auto;
           align-items: center;
@@ -27,30 +29,82 @@
           flex-direction: column;
         }
 
+        .display-box {
+            margin: 5% auto;
+            padding: 8%;
+            background: var(--light);
+            border-radius: 8px;
+            box-shadow: 0 0.5rem 0.7rem rgba(0,0,0,0.2);
+        }
+
         h1{
           font-size: 2.1rem;
           text-align: center;
         }
 
-        img{
+        #myImage{
           height: 20%;
           width: auto;
         }
 
-        #pressBtn{
+        .button-container{
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .button-container-center{
+          grid-column: 2; 
+          text-align: center;
+        }
+        .button-container-right{
+          grid-column: 3; 
+          text-align: right;
+        }
+        #lightPic, #deletePic{
+          height: 70%;
+          width: auto;
+        }
+
+        button{
           cursor: pointer;
-          background-color: var(--button);
           border: none;
           border-radius: 50%;
           width: 3.5rem;
           height: 3.5rem;
         }
-        #pressBtn:hover{
-          color: #fff;
-          background-color: var(--button-hover);
+        button:active{
+          box-shadow: inset 0 0.5rem 0.5rem rgba(0, 0, 0, 0.3);
         }
-        #pressBtn:active{
-          box-shadow: inset 0 0.3rem 1rem rgba(0, 0, 0, 0.5);
+
+        #pressBtn{background-color: var(--button);}
+        #pressBtn:hover{background-color: var(--button-hover);}
+        
+        #deleteBtn{background-color: var(--white);}
+        #deleteBtn:hover{background-color: #bbc8d2;}
+
+        .label{
+          font-size: 120%;
+          color: var(--white);
+          margin-bottom: 10%;
+        }
+        .output{
+          font-size: 200%;
+          font-weight: bold;
+          font-family: 'Times New Roman', Times, serif;
+          letter-spacing: 10%;
+          min-height: 100%;
+        }
+
+        #code-output, #text-output{color: var(--button);}
+
+        table{
+          width: 100%;
+          padding: auto;
+          text-align: left;
+          font-size: 150%;
+          font-family: 'Courier New', Courier, monospace;
+        }
+        table td:hover {
+          background-color: var(--primay);
         }
       </style>
     </head>
@@ -62,30 +116,177 @@
 
       <img id="myImage" src="image/pic_bulboff.gif">
 
-      <p>
-        <button id="pressBtn"></button>
-      </p>
+      <div class="button-container">
+        <div class="button-container-center">
+          <button id="pressBtn">
+            <img id="lightPic" src="image/light.png">
+          </button>
+        </div>
+
+        <div class="button-container-right">
+          <button id="deleteBtn" onclick="clearAll()">
+            <img id="deletePic" src="image/trashcan.png">
+          </button>
+        </div>
+      </div>
+
+      <div class="display-box" id="signal-box">
+        <div class="label">當前輸入的信號（訊號間隔：1秒自動轉字母）</div>
+        <div id="code-output" class="output"></div>
+      </div>
+
+      <div class="display-box">
+        <div class="label">識別翻譯出的英文</div>
+        <div id="text-output" class="output"></div>
+      </div>
+
+      <div class="display-box">
+        <div class="label">摩斯密碼對照表</div>
+        <table>
+          <tr>
+            <td>A .-</td>
+            <td>N -.</td>
+          </tr>
+          <tr>
+            <td>B -...</td>
+            <td>O ---</td>
+          </tr>
+          <tr>
+            <td>C -.-.</td>
+            <td>P .--.</td>
+          </tr>
+          <tr>
+            <td>D -..</td>
+            <td>Q --.-</td>
+          </tr>
+          <tr>
+            <td>E .</td>
+            <td>R .-.</td>
+          </tr>
+          <tr>
+            <td>F ..-.</td>
+            <td>S ...</td>
+          </tr>
+          <tr>
+            <td>G --.</td>
+            <td>T -</td>
+          </tr>
+          <tr>
+            <td>H ....</td>
+            <td>U ..-</td>
+          </tr>
+          <tr>
+            <td>I ..</td>
+            <td>V ...-</td>
+          </tr>
+          <tr>
+            <td>J .---</td>
+            <td>W .--</td>
+          </tr>
+          <tr>
+            <td>K -.-</td>
+            <td>X -..-</td>
+          </tr>
+          <tr>
+            <td>L .-..</td>
+            <td>Y -.--</td>
+          </tr>
+          <tr>
+            <td>M --</td>
+            <td>Z --..</td>
+          </tr>
+        </table>
+      </div>
 
     </div>
 
     <script>
-      const btn = document.getElementById('pressBtn');
+      const morseMap = {
+            '.-': 'A', '-...': 'B', '-.-.': 'C', '-..': 'D', '.': 'E', '..-.': 'F',
+            '--.': 'G', '....': 'H', '..': 'I', '.---': 'J', '-.-': 'K', '.-..': 'L',
+            '--': 'M', '-.': 'N', '---': 'O', '.--.': 'P', '--.-': 'Q', '.-.': 'R',
+            '...': 'S', '-': 'T', '..-': 'U', '...-': 'V', '.--': 'W', '-..-': 'X',
+            '-.--': 'Y', '--..': 'Z'
+        };
+
+        const LONG_PRESS_MS = 300;
+        const IDLE_TIMEOUT_MS = 1000;
+
+        let pressStartTime = 0;
+        let isPressing = false;
+        let idleTimer = null;
+        
+        let currentLetterCode = "";
+        let translatedText = "";
+      
+        const btn = document.getElementById('pressBtn');
+        const codeOutput = document.getElementById('code-output');
+        const textOutput = document.getElementById('text-output');
 
         function startPress(){
+          if (isPressing) return;
+          isPressing = true;
+          //counting
+          pressStartTime = Date.now();
+
+          clearTimeout(idleTimer);
+
+          //light on
           var pic = "image/pic_bulbon.gif";
           document.getElementById('myImage').src = pic;
+          document.getElementById('signal-box').style.border = '3px solid var(--button)';
         }
 
         function endPress(){
+          if (!isPressing) return;
+          isPressing = false;
+          //math: now - press-start = pressing-time
+          const duration = Date.now() - pressStartTime;
+            
+          //dot(.) or line(-)
+          //check with time
+          if (duration >= LONG_PRESS_MS) {
+            currentLetterCode += '-';
+          } else {
+            currentLetterCode += '.';
+          }
+
+          //updata text
+          codeOutput.innerText = currentLetterCode;
+
+          //1 sec check
+          idleTimer = setTimeout(decodeCurrentLetter, IDLE_TIMEOUT_MS);
+
+          //light off
           var pic = "image/pic_bulboff.gif";
           document.getElementById('myImage').src = pic;
+          document.getElementById('signal-box').style.border = '3px solid var(--light)';
         }
 
-      btn.addEventListener('mousedown', startPress);
-      btn.addEventListener('mouseup', endPress);
-      btn.addEventListener('mouseleave', endPress);
+        function decodeCurrentLetter() {
+          if (currentLetterCode === "") return;
+          //checking signal
+          const letter = morseMap[currentLetterCode] || '?';
+          translatedText += letter;
+          //update translated text
+          textOutput.innerText = translatedText;
+          //clean signal
+          currentLetterCode = "";
+          codeOutput.innerText = "";
+        }
+
+        function clearAll() {
+          currentLetterCode = "";
+          translatedText = "";
+          codeOutput.innerText = "";
+          textOutput.innerText = "";
+          clearTimeout(idleTimer);
+        }
+
+        btn.addEventListener('mousedown', startPress);
+        btn.addEventListener('mouseup', endPress);
+        btn.addEventListener('mouseleave', endPress);
       
     </script>
   </body>
 </html>
-
