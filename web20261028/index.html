@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <style>
+        :root{
+          --main: #27374D;
+          --primay: #526D82;
+          --light: #9DB2BF;
+          --white: #DDE6ED;
+          --button: #FFD369;
+          --button-hover: #e2b751;
+        }
+
+        body{
+          background-color: var(--main);
+          color: var(--white);
+        }
+
+        .container{
+          background-color: var(--primay);
+          padding: 1.5rem;
+          max-width: 60%;
+          margin: auto;
+          align-items: center;
+          text-align: center;
+          flex-direction: column;
+        }
+
+        h1{
+          font-size: 2.1rem;
+          text-align: center;
+        }
+
+        img{
+          height: 20%;
+          width: auto;
+        }
+
+        #pressBtn{
+          cursor: pointer;
+          background-color: var(--button);
+          border: none;
+          border-radius: 50%;
+          width: 3.5rem;
+          height: 3.5rem;
+        }
+        #pressBtn:hover{
+          color: #fff;
+          background-color: var(--button-hover);
+        }
+        #pressBtn:active{
+          box-shadow: inset 0 0.3rem 1rem rgba(0, 0, 0, 0.5);
+        }
+      </style>
+    </head>
+
+  <body>
+    <div class="container">
+      <title>資三乙李加薏 燈泡互動遊戲</title>
+      <h1>資三乙李加薏 燈泡互動遊戲</h1>
+
+      <img id="myImage" src="image/pic_bulboff.gif">
+
+      <p>
+        <button id="pressBtn"></button>
+      </p>
+
+    </div>
+
+    <script>
+      const btn = document.getElementById('pressBtn');
+
+        function startPress(){
+          var pic = "image/pic_bulbon.gif";
+          document.getElementById('myImage').src = pic;
+        }
+
+        function endPress(){
+          var pic = "image/pic_bulboff.gif";
+          document.getElementById('myImage').src = pic;
+        }
+
+      btn.addEventListener('mousedown', startPress);
+      btn.addEventListener('mouseup', endPress);
+      btn.addEventListener('mouseleave', endPress);
+      
+    </script>
+  </body>
+</html>
+
